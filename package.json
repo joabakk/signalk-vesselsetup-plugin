@@ -1,0 +1,71 @@
+{
+	"name": "signalk-vesselsetup-plugin",
+	"version": "0.0.2",
+	"description": "A plugin to set vessel info and static values",
+	"keywords": [
+		"signalk-node-server-plugin"
+	],
+	"license": "ISC",
+	"author": {
+		"name": "Joachim Bakke",
+		"email": "signalk@heiamoss.com"
+	},
+	"main": "index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"dependencies": {
+		"jsonfile": "^2.4.0"
+	},
+	"devDependencies": {},
+	"optionalDependencies": {},
+	"readme": "ERROR: No README data found!",
+	"_args": [
+		[
+			{
+				"raw": "/home/pi/signalk-server-node/node_modules/signalk-vesselsetup-plugin/signalk-vesselsetup-plugin-0.0.2.tgz",
+				"rawSpec": "/home/pi/signalk-server-node/node_modules/signalk-vesselsetup-plugin/signalk-vesselsetup-plugin-0.0.2.tgz",
+				"spec": "/home/pi/signalk-server-node/node_modules/signalk-vesselsetup-plugin/signalk-vesselsetup-plugin-0.0.2.tgz",
+				"type": "local"
+			},
+			"/home/pi/signalk-server-node"
+		],
+		[
+			{
+				"raw": "/home/pi/signalk-server-node/node_modules/signalk-vesselsetup-plugin/",
+				"rawSpec": "/home/pi/signalk-server-node/node_modules/signalk-vesselsetup-plugin/",
+				"spec": "/home/pi/signalk-server-node/node_modules/signalk-vesselsetup-plugin",
+				"type": "directory"
+			},
+			"/home/pi/signalk-server-node"
+		],
+		[
+			{
+				"raw": "/home/pi/signalk-server-node/node_modules/signalk-vesselsetup-plugin/signalk-vesselsetup-plugin-0.0.2.tgz",
+				"rawSpec": "/home/pi/signalk-server-node/node_modules/signalk-vesselsetup-plugin/signalk-vesselsetup-plugin-0.0.2.tgz",
+				"spec": "/home/pi/signalk-server-node/node_modules/signalk-vesselsetup-plugin/signalk-vesselsetup-plugin-0.0.2.tgz",
+				"type": "local"
+			},
+			"/home/pi/signalk-server-node"
+		]
+	],
+	"_from": "node_modules/signalk-vesselsetup-plugin/signalk-vesselsetup-plugin-0.0.2.tgz",
+	"_id": "signalk-vesselsetup-plugin@0.0.2",
+	"_inCache": true,
+	"_location": "/signalk-vesselsetup-plugin",
+	"_phantomChildren": {},
+	"_requested": {
+		"raw": "/home/pi/signalk-server-node/node_modules/signalk-vesselsetup-plugin/signalk-vesselsetup-plugin-0.0.2.tgz",
+		"rawSpec": "/home/pi/signalk-server-node/node_modules/signalk-vesselsetup-plugin/signalk-vesselsetup-plugin-0.0.2.tgz",
+		"spec": "/home/pi/signalk-server-node/node_modules/signalk-vesselsetup-plugin/signalk-vesselsetup-plugin-0.0.2.tgz",
+		"type": "local"
+	},
+	"_requiredBy": [
+		"#USER",
+		"/"
+	],
+	"_resolved": "file:node_modules/signalk-vesselsetup-plugin/signalk-vesselsetup-plugin-0.0.2.tgz",
+	"_shasum": "863175abed912bd0585f0138f1c2694bb691a29c",
+	"_spec": "/home/pi/signalk-server-node/node_modules/signalk-vesselsetup-plugin/signalk-vesselsetup-plugin-0.0.2.tgz",
+	"_where": "/home/pi/signalk-server-node"
+}
