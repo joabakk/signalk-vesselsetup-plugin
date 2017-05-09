@@ -43,7 +43,7 @@ module.exports = function(app) {
       saveAs: {
         type: "string",
         title: "Save as",
-        default: "settings/[filename here].json"
+        default: "settings/[filename here].json (vesselname or test or onboard etc)"
       },
       "name"  : {
         title: "Vessel name",
@@ -190,6 +190,7 @@ module.exports = function(app) {
         "uuid"  : options.uuid,
 
       },
+      "mdns": options.mdns,
       "interfaces": {
         "bower": options.bower,
         "rest": options.rest,
