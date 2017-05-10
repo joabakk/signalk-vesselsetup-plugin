@@ -261,7 +261,8 @@ module.exports = function(app) {
                   "type": "providers/serialport",
                   "options": {
                     "device": item.option1,
-                    "baudrate": item.option2
+                    "baudrate": item.option2,
+                    "toStdout": "nmea0183out"
                   },
                   "optionMappings": [
                     {
@@ -334,7 +335,8 @@ module.exports = function(app) {
               "pipeElements": [{
                 "type": "providers/execute",
                 "options": {
-                  "command": command
+                  "command": command,
+                  "toChildProcess": "nmea2000out"
                 }
               }, {
                 "type": "providers/liner"
