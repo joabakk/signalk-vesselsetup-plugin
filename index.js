@@ -2,11 +2,15 @@ const signalkSchema = require('signalk-schema')
 var find = require('fs-find')
 , path = process.cwd();
 
+const uuidV4 = require('uuid/v4');
+const newuuid = "urn:mrn:signalk:uuid:" + uuidV4();
+
 const relevantKeys = Object.keys(signalkSchema.metadata)
 .filter(s => s.indexOf('/vessels/*') >= 0)
 .map(s => s.replace('/vessels/*', '').replace(/\//g, '.').replace(/RegExp/g, '*').substring(1))
 
 var fileList = [];
+var itemType;
 
 var list = find("settings", function(err, results) {
   if(err) {
@@ -39,10 +43,18 @@ module.exports = function(app) {
 
   plugin.schema = {
     type: "object",
+    required: [
+        "name"
+    ],
+    anyOf: [
+        {"required": ["uuid"]},
+        {"required": ["mmsi"]}
+    ],
+    additionalProperties:false,
     properties: {
       saveAs: {
         type: "string",
-        title: "Save as ((vesselname or test or onboard etc). After 'submit', the node server must be restarted to implement changes)",
+        title: "Save as: (vesselname or test or onboard etc). After 'submit', the node server must be restarted to implement changes",
         default: "settings/[filename here].json"
       },
       "name"  : {
@@ -63,7 +75,8 @@ module.exports = function(app) {
       "uuid"  : {
         title: "Signal K UUID",
         type: "string",
-        default: app.signalk.self.uuid
+        "enum": [app.signalk.self.uuid, newuuid],
+        enumNames: [`Use existing: ${app.signalk.self.uuid}`, `Make new: ${newuuid}`]
       },
       "mmsi"  : {
         title: "International MMSI number",
@@ -175,19 +188,15 @@ module.exports = function(app) {
               type: "number",
               default: 0,
               "enum": [0,1,2,3,4,5],
-              enumNames: ["NMEA0183 from file (option 1: filename, option 2: throttle rate)", "NMEA0183 from serial (option 1: device, option 2: baudrate)", "N2K from file (option 1: file name, option 2: throttle rate)", "N2K from serial (option 1: device, option 2 not used)", "NMEA0183 over tcp (option1: host, option 2 port)", "NMEA0183 over UDP (option 1: not used, option 2 port)"]
+              enumNames: ["NMEA0183 from file (option 1: filename, option 2: throttle rate)", "NMEA0183 from serial (option 1: device, option 2: baudrate)", "N2K from file (option 1: filename, option 2: throttle rate)", "N2K from serial (option 1: device, option 2 not used)", "NMEA0183 over tcp (option1: host, option 2 port)", "NMEA0183 over UDP (option 1: not used, option 2 port)"]
             },
             "option1": {
-              title: "option 1",
+              title: "Option 1",
               type: "string",
             },
             "option2": {
               title: "option 2",
               type: "number"
-            },
-            "loggingInput": {
-              title: "log input to file (not implemented)",
-              type: "boolean"
             },
             "loggingInput": {
               title: "log input to file (not implemented)",
@@ -281,6 +290,9 @@ module.exports = function(app) {
             }
           );
         }
+        if(options.loggingSK === true){
+          obj.pipedProviders[(obj.pipedProviders.length + 1)] = {"type": "providers/log","options": {"logdir": options.logfile,"discriminator": "I"}};
+        }
         if(item.type === 1){
           obj.pipedProviders.push(
             {
@@ -290,8 +302,7 @@ module.exports = function(app) {
                   "type": "providers/serialport",
                   "options": {
                     "device": item.option1,
-                    "baudrate": item.option2,
-                    "toStdout": "nmea0183out"
+                    "baudrate": item.option2
                   },
                   "optionMappings": [
                     {
@@ -364,8 +375,7 @@ module.exports = function(app) {
               "pipeElements": [{
                 "type": "providers/execute",
                 "options": {
-                  "command": command,
-                  "toChildProcess": "nmea2000out"
+                  "command": command
                 }
               }, {
                 "type": "providers/liner"

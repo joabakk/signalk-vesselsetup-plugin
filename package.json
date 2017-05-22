@@ -1,31 +1,25 @@
 {
-    "name": "signalk-vesselsetup-plugin",
-    "version": "0.0.1",
-    "description": "A plugin to set vessel info and static values",
-    "keywords": [
-        "signalk-node-server-plugin"
-    ],
-    "license": "ISC",
-    "author": {
-        "name": "Joachim Bakke",
-        "email": "signalk@heiamoss.com"
-    },
-    "main": "index.js",
-    "scripts": {
-	    "test": "mocha"
-    },
-    "dependencies": {
-        "jsonfile": "^3.0.0",
-        "fs-find": "^0.4.0"
-    },
-    	"devDependencies": {
-		"chai": "^3.4.1",
-		"chai-things": "^0.2.0",
-		"debug": "^2.2.0",
-		"mocha": "^3.4.1",
-		"signalk-schema": "0.0.1-3"
-	
-},
-    "optionalDependencies": {},
-    "readme": "ERROR: No README data found!"
+	"name": "signalk-vesselsetup-plugin",
+	"version": "0.1.0",
+	"description": "A plugin to set vessel info and static values",
+	"keywords": [
+		"signalk-node-server-plugin"
+	],
+	"license": "ISC",
+	"author": {
+		"name": "Joachim Bakke",
+		"email": "signalk@heiamoss.com"
+	},
+	"main": "index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"dependencies": {
+		"fs-find": "^0.4.0",
+		"jsonfile": "^3.0.0",
+		"uuid": "^3.0.1"
+	},
+	"devDependencies": {},
+	"optionalDependencies": {},
+	"readme": "ERROR: No README data found!"
 }
