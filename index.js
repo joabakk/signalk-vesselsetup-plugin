@@ -187,8 +187,15 @@ module.exports = function(app) {
               title: "Select Provider",
               type: "number",
               default: 0,
-              "enum": [0,1,2,3,4,5],
-              enumNames: ["NMEA0183 from file (option 1: filename, option 2: throttle rate)", "NMEA0183 from serial (option 1: device, option 2: baudrate)", "N2K from file (option 1: filename, option 2: throttle rate)", "N2K from serial (option 1: device, option 2 not used)", "NMEA0183 over tcp (option1: host, option 2 port)", "NMEA0183 over UDP (option 1: not used, option 2 port)"]
+              "enum": [0,1,2,3,4,5,6],
+              enumNames: ["NMEA0183 from file (option 1: filename, option 2: throttle rate)",
+                "NMEA0183 from serial (option 1: device, option 2: baudrate)",
+                "N2K from file (option 1: filename, option 2: throttle rate)",
+                "N2K from serial (option 1: device, option 2 not used)",
+                "NMEA0183 over tcp (option1: host, option 2 port)",
+                "NMEA0183 over UDP (option 1: not used, option 2 port)",
+                "Signal K from serial port (option 1: device, option 2: baudrate)"
+              ]
             },
             "option1": {
               title: "Option 1",
@@ -289,9 +296,6 @@ module.exports = function(app) {
               ]
             }
           );
-        }
-        if(options.loggingSK === true){
-          obj.pipedProviders[(obj.pipedProviders.length + 1)] = {"type": "providers/log","options": {"logdir": options.logfile,"discriminator": "I"}};
         }
         if(item.type === 1){
           obj.pipedProviders.push(
@@ -450,6 +454,39 @@ module.exports = function(app) {
             }
           );
         }
+        if(item.type === 6){
+          obj.pipedProviders.push(
+            {
+              "id": item.id,
+              "pipeElements": [
+                {
+                  "type": "providers/serialport",
+                  "options": {
+                    "device": item.option1,
+                    "baudrate": item.option2
+                  },
+                  "optionMappings": [
+                    {
+                      "fromAppProperty": "argv.SKdevice",
+                      "toOption": "device"
+                    },
+
+                    {
+                      "fromAppProperty": "argv.SKbaudrate",
+                      "toOption": "baudrate"
+                    }
+                  ]
+                },
+                {
+                  "type": "providers/from_json"
+                },
+              ]
+            }
+          );
+        }
+        /*if(options.loggingSK === true){
+          obj.pipedProviders[(obj.pipedProviders.length + 1)] = {"type": "providers/log","options": {"logdir": options.logfile,"discriminator": "I"}};
+        }*/
       }
     });
     jsonfile.writeFile(file, obj, {spaces: 2}, function (err) {
