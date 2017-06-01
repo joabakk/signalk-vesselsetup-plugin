@@ -112,6 +112,16 @@ module.exports = function(app) {
         type: "boolean",
         default: true
       },
+      "charts": {
+        title: "charts",
+        type: "boolean",
+        default: true
+      },
+      "webapps": {
+        title: "webapps",
+        type: "boolean",
+        default: true
+      },
       "nmea-tcp": {
         title: "nmea_tcp",
         type: "boolean",
@@ -241,7 +251,9 @@ module.exports = function(app) {
         "rest": options.rest,
         "ws": options.ws,
         "tcp": options.tcp,
-        "nmea-tcp": options.nmea_tcp
+        "nmea-tcp": options.nmea_tcp,
+        "charts": options.charts,
+        "webapps": options.webapps
       },
       "pipedProviders": []
     };
@@ -467,12 +479,12 @@ module.exports = function(app) {
                   },
                   "optionMappings": [
                     {
-                      "fromAppProperty": "argv.SKdevice",
+                      "fromAppProperty": "argv.nmeadevice",
                       "toOption": "device"
                     },
 
                     {
-                      "fromAppProperty": "argv.SKbaudrate",
+                      "fromAppProperty": "argv.nmeabaudrate",
                       "toOption": "baudrate"
                     }
                   ]
