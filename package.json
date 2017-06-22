@@ -1,6 +1,6 @@
 {
 	"name": "signalk-vesselsetup-plugin",
-	"version": "0.1.0",
+	"version": "0.4.0",
 	"description": "A plugin to set vessel info and static values",
 	"keywords": [
 		"signalk-node-server-plugin"
@@ -27,5 +27,53 @@
 		"signalk-schema": "0.0.1-3"
 	},
 	"optionalDependencies": {},
-	"readme": "ERROR: No README data found!"
+	"readme": "ERROR: No README data found!",
+	"_args": [
+		[
+			{
+				"raw": "joabakk/signalk-vesselsetup-plugin",
+				"rawSpec": "joabakk/signalk-vesselsetup-plugin",
+				"spec": "github:joabakk/signalk-vesselsetup-plugin",
+				"type": "hosted",
+				"hosted": {
+					"type": "github",
+					"ssh": "git@github.com:joabakk/signalk-vesselsetup-plugin.git",
+					"sshUrl": "git+ssh://git@github.com/joabakk/signalk-vesselsetup-plugin.git",
+					"httpsUrl": "git+https://github.com/joabakk/signalk-vesselsetup-plugin.git",
+					"gitUrl": "git://github.com/joabakk/signalk-vesselsetup-plugin.git",
+					"shortcut": "github:joabakk/signalk-vesselsetup-plugin",
+					"directUrl": "https://raw.githubusercontent.com/joabakk/signalk-vesselsetup-plugin/master/package.json"
+				}
+			},
+			"/Users/joachim/Downloads/signalk-server-node"
+		]
+	],
+	"_from": "joabakk/signalk-vesselsetup-plugin",
+	"_id": "signalk-vesselsetup-plugin@0.1.0",
+	"_inCache": true,
+	"_location": "/signalk-vesselsetup-plugin",
+	"_phantomChildren": {},
+	"_requested": {
+		"raw": "joabakk/signalk-vesselsetup-plugin",
+		"rawSpec": "joabakk/signalk-vesselsetup-plugin",
+		"spec": "github:joabakk/signalk-vesselsetup-plugin",
+		"type": "hosted",
+		"hosted": {
+			"type": "github",
+			"ssh": "git@github.com:joabakk/signalk-vesselsetup-plugin.git",
+			"sshUrl": "git+ssh://git@github.com/joabakk/signalk-vesselsetup-plugin.git",
+			"httpsUrl": "git+https://github.com/joabakk/signalk-vesselsetup-plugin.git",
+			"gitUrl": "git://github.com/joabakk/signalk-vesselsetup-plugin.git",
+			"shortcut": "github:joabakk/signalk-vesselsetup-plugin",
+			"directUrl": "https://raw.githubusercontent.com/joabakk/signalk-vesselsetup-plugin/master/package.json"
+		}
+	},
+	"_requiredBy": [
+		"#USER"
+	],
+	"_resolved": "git://github.com/joabakk/signalk-vesselsetup-plugin.git#c0c3fbfb695f65bec710fc3221f91282ae204218",
+	"_shasum": "5a9f5b73bc610d184dd7fa15c1064cb84af0d5f3",
+	"_spec": "joabakk/signalk-vesselsetup-plugin",
+	"_where": "/Users/joachim/Downloads/signalk-server-node",
+	"gitHead": "c0c3fbfb695f65bec710fc3221f91282ae204218"
 }

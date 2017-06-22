@@ -36,6 +36,14 @@ var data = function getContent(){
 module.exports = function(app) {
   var plugin = {};
   var unsubscribes = [];
+  var selfUuid = 'none';
+
+  try {
+    selfUuid = app.signalk.self.uuid;
+  }
+  catch(err) {
+    selfUuid ='none';
+}
 
   plugin.id = "static-data-edit";
   plugin.name = "Edit static data for vessel";
@@ -73,10 +81,10 @@ module.exports = function(app) {
         default: ""
       },
       "uuid"  : {
-        title: "Signal K UUID",
+        title: "Signal K UUID, if no MMSI number is available",
         type: "string",
-        "enum": [app.signalk.self.uuid, newuuid],
-        enumNames: [`Use existing: ${app.signalk.self.uuid}`, `Make new: ${newuuid}`]
+        "enum": ['null', `${selfUuid}`, `${newuuid}`],
+        enumNames: ["Do not use UUID", `Use existing: ${selfUuid}`, `Make new: ${newuuid}`]
       },
       "mmsi"  : {
         title: "International MMSI number",
@@ -127,16 +135,16 @@ module.exports = function(app) {
         type: "boolean",
         default: true
       },
-      "loggingSK": {
+      /*"loggingSK": {
         title: "SK log to file (not enabled)",
         type: "boolean",
         default: false
       },
       "logfile": {
-        title: "logfile folder (not enabled)",
+        title: "logfile folder",
         type: "string",
         default: "logs"
-      },
+      },*/
       optional: {
         type: "array",
         title: "Optional data (not enabled)",
@@ -215,10 +223,10 @@ module.exports = function(app) {
               title: "option 2",
               type: "number"
             },
-            "loggingInput": {
-              title: "log input to file (not implemented)",
+            /*"loggingInput": {
+              title: "log input to file",
               type: "boolean"
-            }
+            }*/
           }
         }
       }
@@ -239,10 +247,7 @@ module.exports = function(app) {
       "vessel": {
         "name"  : options.name,
         "brand" : options.brand,
-        "type"  : options.type,
-        "uuid"  : options.uuid,
-        "mmsi"  : options.mmsi,
-
+        "type"  : options.type
       },
       "mdns": options.mdns,
       "ssl" : options.ssl,
@@ -257,6 +262,12 @@ module.exports = function(app) {
       },
       "pipedProviders": []
     };
+    if (options.mmsi === ""){
+      obj.vessel["uuid"] = options.uuid;
+    } else {
+      obj.vessel["mmsi"] = "urn:mrn:imo:mmsi:" + options.mmsi;
+    }
+
     if (options.dimensions) {
       obj.vessel.dimensions = {};
       options.dimensions.forEach((item)=>{
