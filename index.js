@@ -1,9 +1,19 @@
+const debug = require('debug')('signalk-vesselsetup-plugin')
+const util = require('util')
 const signalkSchema = require('signalk-schema')
 var find = require('fs-find')
 , path = process.cwd();
 
 const uuidV4 = require('uuid/v4');
 const newuuid = "urn:mrn:signalk:uuid:" + uuidV4();
+
+try {
+  var default_file = require('../../settings/defaults.json')
+}
+catch(err) {
+  return;
+}
+//Iterate defaults just like a regular object.
 
 const relevantKeys = Object.keys(signalkSchema.metadata)
 .filter(s => s.indexOf('/vessels/*') >= 0)
@@ -60,10 +70,39 @@ module.exports = function(app) {
     ],
     additionalProperties:false,
     properties: {
+      file: {
+        title: "Settings file to import",
+        type: "string",
+        "enum": fileList
+      },
       saveAs: {
         type: "string",
         title: "Save as: (vesselname or test or onboard etc). After 'submit', the node server must be restarted to implement changes",
         default: "settings/[filename here].json"
+      },
+      default_s: {
+        type: "array",
+        title: "defaults.json static data",
+        items: {
+          title: "data",
+          type: "object",
+          properties: {
+            "active": {
+              title: "active",
+              type: "boolean",
+              default: true
+            },
+            "infoType": {
+              title: "path",
+              type: "string",
+              "enum": relevantKeys
+            },
+            "value": {
+              title: "value",
+              type: "string"
+            }
+          }
+        }
       },
       "name"  : {
         title: "Vessel name",
@@ -145,49 +184,9 @@ module.exports = function(app) {
         type: "string",
         default: "logs"
       },*/
-      optional: {
-        type: "array",
-        title: "Optional data (not enabled)",
-        items: {
-          title: "data",
-          type: "object",
-          properties: {
-            "infoType": {
-              title: "value",
-              type: "string",
-              "enum": ["callsign", "IMO"],
-              enumNames: ["VHF call sign", "IMO number"]
-            },
-            "value": {
-              title: "value",
-              type: "string"
-            }
-          }
-        }
-      },
-      dimensions: {
-        type: "array",
-        title: "Optional dimensions",
-        items: {
-          title: " ",
-          type: "object",
-          properties: {
-            "dimensionType": {
-              title: "dimension",
-              type: "string",
-              "enum": ["length", "beam", "mast", "depthTransducer", "keel", "fromCenter", "fromBow"],
-              enumNames: ["length over all (LOA) [m]", "beam (width) [m]", "mast height above water line [m]", "Depth transducer level below water line [m]", "keel depth below water line [m]", "GPS antenna distance from center line [m]", "GPS antenna distance from bow [m]"]
-            },
-            "dimension": {
-              title: "value",
-              type: "number"
-            }
-          }
-        }
-      },
       providers: {
         type: "array",
-        title: "",
+        title: "Inputs and outputs",
         items: {
           title: "Providers",
           type: "object",
@@ -241,7 +240,34 @@ module.exports = function(app) {
 
 
   plugin.start = function(options) {
+    default_file?debug(JSON.stringify(default_file)):debug("no defaults.json found")
     var jsonfile = require('jsonfile');
+    // defaults first:
+    if(default_file){
+      var defaults_content = default_file
+    } else {
+      var defaults_content = {
+        "vessels": {
+        "self": {
+        }
+      }
+    }}
+    if (options.mmsi === ""){
+      defaults_content.vessels.self["uuid"] = options.uuid;
+    } else {
+      defaults_content.vessels.self["mmsi"] = "urn:mrn:imo:mmsi:" + options.mmsi;
+    }
+    /*if(options.default_s){
+      options.default_s.forEach(function(item){
+        if(item.active === true){
+          debug("path: " + item.infoType + " value: " + item.value)
+          //defaults_content.vessels.self[item.infoType] = item.value
+        }
+      })
+    }*/
+
+
+    // then vessel settings file:
     var file = options.saveAs;
     var obj = {
       "vessel": {
@@ -262,18 +288,13 @@ module.exports = function(app) {
       },
       "pipedProviders": []
     };
+    //remove after PR#182 is merged from here:
     if (options.mmsi === ""){
       obj.vessel["uuid"] = options.uuid;
     } else {
       obj.vessel["mmsi"] = "urn:mrn:imo:mmsi:" + options.mmsi;
     }
-
-    if (options.dimensions) {
-      obj.vessel.dimensions = {};
-      options.dimensions.forEach((item)=>{
-        obj.vessel.dimensions[item.dimensionType] = item.dimension;
-      });
-    }
+    //..to here
 
     options.providers.forEach(function(item){
       if(item.active){
@@ -514,7 +535,11 @@ module.exports = function(app) {
     });
     jsonfile.writeFile(file, obj, {spaces: 2}, function (err) {
       console.error(err);
-    });
+    }); //vessel settings json file
+
+    jsonfile.writeFile('settings/default-test.json', defaults_content, {spaces: 2}, function (err) {
+      console.error(err);
+    }); //defaults.json
     return true;
   };
 
