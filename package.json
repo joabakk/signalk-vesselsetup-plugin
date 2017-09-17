@@ -16,7 +16,7 @@
 	},
 	"dependencies": {
 		"fs-find": "^0.4.0",
-		"jsonfile": "^3.0.0",
+		"jsonfile": "^4.0.0",
 		"uuid": "^3.0.1"
 	},
 	"devDependencies": {
