@@ -43,7 +43,7 @@ module.exports = function(app) {
   }
   catch(err) {
     selfUuid ='none';
-}
+  }
 
   plugin.id = "static-data-edit";
   plugin.name = "Edit static data for vessel";
@@ -52,11 +52,11 @@ module.exports = function(app) {
   plugin.schema = {
     type: "object",
     required: [
-        "name"
+      "name"
     ],
     anyOf: [
-        {"required": ["uuid"]},
-        {"required": ["mmsi"]}
+      {"required": ["uuid"]},
+      {"required": ["mmsi"]}
     ],
     additionalProperties:false,
     properties: {
@@ -136,145 +136,146 @@ module.exports = function(app) {
         default: true
       },
       /*"loggingSK": {
-        title: "SK log to file (not enabled)",
-        type: "boolean",
-        default: false
-      },
-      "logfile": {
-        title: "logfile folder",
-        type: "string",
-        default: "logs"
-      },*/
-      optional: {
-        type: "array",
-        title: "Optional data (not enabled)",
-        items: {
-          title: "data",
-          type: "object",
-          properties: {
-            "infoType": {
-              title: "value",
-              type: "string",
-              "enum": ["callsign", "IMO"],
-              enumNames: ["VHF call sign", "IMO number"]
-            },
-            "value": {
-              title: "value",
-              type: "string"
-            }
-          }
-        }
-      },
-      dimensions: {
-        type: "array",
-        title: "Optional dimensions",
-        items: {
-          title: " ",
-          type: "object",
-          properties: {
-            "dimensionType": {
-              title: "dimension",
-              type: "string",
-              "enum": ["length", "beam", "mast", "depthTransducer", "keel", "fromCenter", "fromBow"],
-              enumNames: ["length over all (LOA) [m]", "beam (width) [m]", "mast height above water line [m]", "Depth transducer level below water line [m]", "keel depth below water line [m]", "GPS antenna distance from center line [m]", "GPS antenna distance from bow [m]"]
-            },
-            "dimension": {
-              title: "value",
-              type: "number"
-            }
-          }
-        }
-      },
-      providers: {
-        type: "array",
-        title: "",
-        items: {
-          title: "Providers",
-          type: "object",
-          properties: {
-            "active": {
-              title: "Active",
-              type: "boolean",
-              default: true
-            },
-            "id": {
-              title: "Provider ID",
-              type: "string"
-            },
-            "type": {
-              title: "Select Provider",
-              type: "number",
-              default: 0,
-              "enum": [0,1,2,3,4,5,6],
-              enumNames: ["NMEA0183 from file (option 1: filename, option 2: throttle rate)",
-                "NMEA0183 from serial (option 1: device, option 2: baudrate)",
-                "N2K from file (option 1: filename, option 2: throttle rate)",
-                "N2K from serial (option 1: device, option 2 not used)",
-                "NMEA0183 over tcp (option1: host, option 2 port)",
-                "NMEA0183 over UDP (option 1: not used, option 2 port)",
-                "Signal K from serial port (option 1: device, option 2: baudrate)"
-              ]
-            },
-            "option1": {
-              title: "Option 1",
-              type: "string",
-            },
-            "option2": {
-              title: "option 2",
-              type: "number"
-            },
-            /*"loggingInput": {
-              title: "log input to file",
-              type: "boolean"
-            }*/
-          }
+      title: "SK log to file (not enabled)",
+      type: "boolean",
+      default: false
+    },
+    "logfile": {
+    title: "logfile folder",
+    type: "string",
+    default: "logs"
+  },*/
+  optional: {
+    type: "array",
+    title: "Optional data (not enabled)",
+    items: {
+      title: "data",
+      type: "object",
+      properties: {
+        "infoType": {
+          title: "value",
+          type: "string",
+          "enum": ["callsign", "IMO"],
+          enumNames: ["VHF call sign", "IMO number"]
+        },
+        "value": {
+          title: "value",
+          type: "string"
         }
       }
     }
-  };
-  plugin.uiSchema = {
-    content: {
-      "ui:widget": "textarea",
-      rows: 15
+  },
+  dimensions: {
+    type: "array",
+    title: "Optional dimensions",
+    items: {
+      title: " ",
+      type: "object",
+      properties: {
+        "dimensionType": {
+          title: "dimension",
+          type: "string",
+          "enum": ["length", "beam", "mast", "depthTransducer", "keel", "fromCenter", "fromBow"],
+          enumNames: ["length over all (LOA) [m]", "beam (width) [m]", "mast height above water line [m]", "Depth transducer level below water line [m]", "keel depth below water line [m]", "GPS antenna distance from center line [m]", "GPS antenna distance from bow [m]"]
+        },
+        "dimension": {
+          title: "value",
+          type: "number"
+        }
+      }
     }
-  };
-
-
-  plugin.start = function(options) {
-    var jsonfile = require('jsonfile');
-    var file = options.saveAs;
-    var obj = {
-      "vessel": {
-        "name"  : options.name,
-        "brand" : options.brand,
-        "type"  : options.type
+  },
+  providers: {
+    type: "array",
+    title: "Providers (input)",
+    items: {
+      title: "Providers",
+      type: "object",
+      properties: {
+        "active": {
+          title: "Active",
+          type: "boolean",
+          default: true
+        },
+        "id": {
+          title: "Provider ID",
+          type: "string"
+        },
+        "type": {
+          title: "Select Provider",
+          type: "number",
+          default: 0,
+          "enum": [0,1,2,3,4,5,6],
+          enumNames: ["NMEA0183 from file (option 1: filename, option 2: throttle rate)",
+          "NMEA0183 from serial (option 1: device, option 2: baudrate)",
+          "N2K from file (option 1: filename, option 2: throttle rate)",
+          "N2K from serial (option 1: device, option 2 not used)",
+          "NMEA0183 over tcp (option1: host, option 2 port)",
+          "NMEA0183 over UDP (option 1: not used, option 2 port)",
+          "Signal K from serial port (option 1: device, option 2: baudrate)"
+        ]
       },
-      "mdns": options.mdns,
-      "ssl" : options.ssl,
-      "interfaces": {
-        "bower": options.bower,
-        "rest": options.rest,
-        "ws": options.ws,
-        "tcp": options.tcp,
-        "nmea-tcp": options.nmea_tcp,
-        "charts": options.charts,
-        "webapps": options.webapps
+      "option1": {
+        title: "Option 1",
+        type: "string",
       },
-      "pipedProviders": []
-    };
-    if (options.mmsi === ""){
-      obj.vessel["uuid"] = options.uuid;
-    } else {
-      obj.vessel["mmsi"] = "urn:mrn:imo:mmsi:" + options.mmsi;
-    }
+      "option2": {
+        title: "option 2",
+        type: "number"
+      },
+      /*"loggingInput": {
+      title: "log input to file",
+      type: "boolean"
+    }*/
+  }
+}
+}
+}
+};
+plugin.uiSchema = {
+  content: {
+    "ui:widget": "textarea",
+    rows: 15
+  }
+};
 
-    if (options.dimensions) {
-      obj.vessel.dimensions = {};
-      options.dimensions.forEach((item)=>{
-        obj.vessel.dimensions[item.dimensionType] = item.dimension;
-      });
-    }
 
+plugin.start = function(options) {
+  var jsonfile = require('jsonfile');
+  var file = options.saveAs;
+  var obj = {
+    "vessel": {
+      "name"  : options.name,
+      "brand" : options.brand,
+      "type"  : options.type
+    },
+    "mdns": options.mdns,
+    "ssl" : options.ssl,
+    "interfaces": {
+      "bower": options.bower,
+      "rest": options.rest,
+      "ws": options.ws,
+      "tcp": options.tcp,
+      "nmea-tcp": options.nmea_tcp,
+      "charts": options.charts,
+      "webapps": options.webapps
+    },
+    "pipedProviders": []
+  };
+  if (options.mmsi === ""){
+    obj.vessel["uuid"] = options.uuid;
+  } else {
+    obj.vessel["mmsi"] = "urn:mrn:imo:mmsi:" + options.mmsi;
+  }
+
+  if (options.dimensions) {
+    obj.vessel.dimensions = {};
+    options.dimensions.forEach((item)=>{
+      obj.vessel.dimensions[item.dimensionType] = item.dimension;
+    });
+  }
+
+  if(options.providers){
     options.providers.forEach(function(item){
       if(item.active){
         if(item.type === 0){
@@ -507,23 +508,24 @@ module.exports = function(app) {
             }
           );
         }
-        /*if(options.loggingSK === true){
-          obj.pipedProviders[(obj.pipedProviders.length + 1)] = {"type": "providers/log","options": {"logdir": options.logfile,"discriminator": "I"}};
-        }*/
+        //if(options.loggingSK === true){
+        //obj.pipedProviders[(obj.pipedProviders.length + 1)] = {"type": "providers/log","options": {"logdir": options.logfile,"discriminator": "I"}};
+        //}
       }
     });
-    jsonfile.writeFile(file, obj, {spaces: 2}, function (err) {
-      console.error(err);
-    });
-    return true;
-  };
+  }
+  jsonfile.writeFile(file, obj, {spaces: 2}, function (err) {
+    console.error(err);
+  });
+  return true;
+};
 
-  plugin.stop = function() {
-    unsubscribes.forEach(f => f());
-    unsubscribes = [];
-  };
+plugin.stop = function() {
+  unsubscribes.forEach(f => f());
+  unsubscribes = [];
+};
 
 
 
-  return plugin;
+return plugin;
 };
