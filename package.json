@@ -10,7 +10,14 @@
 		"name": "Joachim Bakke",
 		"email": "signalk@heiamoss.com"
 	},
+	"maintainers": [
+		{
+			"name": "joabakk",
+			"email": "npm@heiamoss.com"
+		}
+	],
 	"main": "index.js",
+	"directories": {},
 	"scripts": {
 		"test": "mocha"
 	},
@@ -20,13 +27,17 @@
 		"uuid": "^3.0.1"
 	},
 	"devDependencies": {
-		"chai": "^4.1.0",
+		"chai": "^3.4.1",
 		"chai-things": "^0.2.0",
-		"debug": "^3.0.0",
+		"debug": "^2.2.0",
 		"mocha": "^3.4.1",
 		"signalk-schema": "0.0.1-3"
 	},
 	"optionalDependencies": {},
+	"dist": {
+		"shasum": "7e7c2cda9d7a40ded331bdadc01b3602961ac2e3",
+		"tarball": "https://registry.npmjs.org/signalk-vesselsetup-plugin/-/signalk-vesselsetup-plugin-0.4.0.tgz"
+	},
 	"readme": "ERROR: No README data found!",
 	"_args": [
 		[
@@ -46,34 +57,46 @@
 				}
 			},
 			"/Users/joachim/Downloads/signalk-server-node"
+		],
+		[
+			{
+				"raw": "signalk-vesselsetup-plugin",
+				"escapedName": "signalk-vesselsetup-plugin",
+				"name": "signalk-vesselsetup-plugin",
+				"spec": "latest",
+				"type": "tag"
+			},
+			"/Users/joachim/Downloads/signalk-server-node"
 		]
 	],
-	"_from": "joabakk/signalk-vesselsetup-plugin",
-	"_id": "signalk-vesselsetup-plugin@0.1.0",
+	"_from": "signalk-vesselsetup-plugin",
+	"_id": "signalk-vesselsetup-plugin@0.4.0",
 	"_inCache": true,
 	"_location": "/signalk-vesselsetup-plugin",
+	"_nodeVersion": "6.9.2",
+	"_npmOperationalInternal": {
+		"host": "s3://npm-registry-packages",
+		"tmp": "tmp/signalk-vesselsetup-plugin-0.4.0.tgz_1498171516018_0.8531966484151781"
+	},
+	"_npmUser": {
+		"name": "joabakk",
+		"email": "npm@heiamoss.com"
+	},
+	"_npmVersion": "3.10.9",
 	"_phantomChildren": {},
 	"_requested": {
-		"raw": "joabakk/signalk-vesselsetup-plugin",
-		"rawSpec": "joabakk/signalk-vesselsetup-plugin",
-		"spec": "github:joabakk/signalk-vesselsetup-plugin",
-		"type": "hosted",
-		"hosted": {
-			"type": "github",
-			"ssh": "git@github.com:joabakk/signalk-vesselsetup-plugin.git",
-			"sshUrl": "git+ssh://git@github.com/joabakk/signalk-vesselsetup-plugin.git",
-			"httpsUrl": "git+https://github.com/joabakk/signalk-vesselsetup-plugin.git",
-			"gitUrl": "git://github.com/joabakk/signalk-vesselsetup-plugin.git",
-			"shortcut": "github:joabakk/signalk-vesselsetup-plugin",
-			"directUrl": "https://raw.githubusercontent.com/joabakk/signalk-vesselsetup-plugin/master/package.json"
-		}
+		"raw": "signalk-vesselsetup-plugin",
+		"escapedName": "signalk-vesselsetup-plugin",
+		"name": "signalk-vesselsetup-plugin",
+		"spec": "latest",
+		"type": "tag"
 	},
 	"_requiredBy": [
 		"#USER"
 	],
-	"_resolved": "git://github.com/joabakk/signalk-vesselsetup-plugin.git#c0c3fbfb695f65bec710fc3221f91282ae204218",
-	"_shasum": "5a9f5b73bc610d184dd7fa15c1064cb84af0d5f3",
-	"_spec": "joabakk/signalk-vesselsetup-plugin",
+	"_resolved": "https://registry.npmjs.org/signalk-vesselsetup-plugin/-/signalk-vesselsetup-plugin-0.4.0.tgz",
+	"_shasum": "7e7c2cda9d7a40ded331bdadc01b3602961ac2e3",
+	"_spec": "signalk-vesselsetup-plugin",
 	"_where": "/Users/joachim/Downloads/signalk-server-node",
 	"gitHead": "c0c3fbfb695f65bec710fc3221f91282ae204218"
 }
