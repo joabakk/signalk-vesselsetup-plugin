@@ -1,4 +1,4 @@
-const signalkSchema = require('signalk-schema')
+const signalkSchema = require('@signalk/signalk-schema')
 var find = require('fs-find')
 , path = process.cwd();
 

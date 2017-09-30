@@ -1,6 +1,6 @@
 {
 	"name": "signalk-vesselsetup-plugin",
-	"version": "0.4.2",
+	"version": "0.4.3",
 	"description": "A plugin to set vessel info and static values",
 	"keywords": [
 		"signalk-node-server-plugin"
