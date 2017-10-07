@@ -31,7 +31,7 @@
 		"chai-things": "^0.2.0",
 		"debug": "^2.2.0",
 		"mocha": "^3.4.1",
-		"@signalk/signalk-schema": "0.0.1-6"
+		"@signalk/signalk-schema": "0.0.1-10"
 	},
 	"optionalDependencies": {},
 	"dist": {
