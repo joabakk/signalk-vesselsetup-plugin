@@ -22,17 +22,6 @@ var list = find("settings", function(err, results) {
   }
 });
 
-var data = function getContent(){
-  fs.readFile('settings/aava-file-settings.json', 'utf8', function (err,data) {
-    if (err) {
-      return console.log(err);
-    }
-    console.log(data);
-    return JSON.stringify(data);
-  });
-
-};
-
 module.exports = function(app) {
   var plugin = {};
   var unsubscribes = [];
