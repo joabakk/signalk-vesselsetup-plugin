@@ -243,12 +243,14 @@ plugin.uiSchema = {
 plugin.start = function(options) {
   var jsonfile = require('jsonfile');
   var file = options.saveAs;
-  var obj = {
+  var defaultObj = {
     "vessel": {
       "name"  : options.name,
       "brand" : options.brand,
       "type"  : options.type
-    },
+    }
+  }
+  var settingsObj = {
     "mdns": options.mdns,
     "ssl" : options.ssl,
     "interfaces": {
@@ -263,15 +265,15 @@ plugin.start = function(options) {
     "pipedProviders": []
   };
   if (options.mmsi === ""){
-    obj.vessel["uuid"] = options.uuid;
+    defaultObj.vessel["uuid"] = options.uuid;
   } else {
-    obj.vessel["mmsi"] = "urn:mrn:imo:mmsi:" + options.mmsi;
+    defaultObj.vessel["mmsi"] = "urn:mrn:imo:mmsi:" + options.mmsi;
   }
 
   if (options.dimensions) {
-    obj.vessel.dimensions = {};
+    defaultObj.vessel.dimensions = {};
     options.dimensions.forEach((item)=>{
-      obj.vessel.dimensions[item.dimensionType] = item.dimension;
+      defaultObj.vessel.dimensions[item.dimensionType] = item.dimension;
     });
   }
 
@@ -279,7 +281,7 @@ plugin.start = function(options) {
     options.providers.forEach(function(item){
       if(item.active){
         if(item.type === 0){
-          obj.pipedProviders.push(
+          settingsObj.pipedProviders.push(
             {
               "id": item.id,
               "pipeElements": [
@@ -322,7 +324,7 @@ plugin.start = function(options) {
           );
         }
         if(item.type === 1){
-          obj.pipedProviders.push(
+          settingsObj.pipedProviders.push(
             {
               "id": item.id,
               "pipeElements": [
@@ -363,7 +365,7 @@ plugin.start = function(options) {
         }
         if(item.type === 2){
           var command = "actisense-serial " + item.option1
-          obj.pipedProviders.push(
+          settingsObj.pipedProviders.push(
             {
               "id": item.id,
               "pipeElements": [
@@ -397,7 +399,7 @@ plugin.start = function(options) {
         }
         if(item.type === 3){
           var command = "actisense-serial " + item.option1;
-          obj.pipedProviders.push(
+          settingsObj.pipedProviders.push(
             {
               "id": item.id,
               "pipeElements": [{
@@ -416,7 +418,7 @@ plugin.start = function(options) {
           );
         }
         if(item.type === 4){
-          obj.pipedProviders.push(
+          settingsObj.pipedProviders.push(
             {
               "id": item.id,
               "pipeElements": [
@@ -445,7 +447,7 @@ plugin.start = function(options) {
           );
         }
         if(item.type === 5){
-          obj.pipedProviders.push(
+          settingsObj.pipedProviders.push(
             {
               "id": item.id,
               "pipeElements": [
@@ -479,7 +481,7 @@ plugin.start = function(options) {
           );
         }
         if(item.type === 6){
-          obj.pipedProviders.push(
+          settingsObj.pipedProviders.push(
             {
               "id": item.id,
               "pipeElements": [
@@ -509,12 +511,15 @@ plugin.start = function(options) {
           );
         }
         //if(options.loggingSK === true){
-        //obj.pipedProviders[(obj.pipedProviders.length + 1)] = {"type": "providers/log","options": {"logdir": options.logfile,"discriminator": "I"}};
+        //settingsObj.pipedProviders[(obj.pipedProviders.length + 1)] = {"type": "providers/log","options": {"logdir": options.logfile,"discriminator": "I"}};
         //}
       }
     });
   }
-  jsonfile.writeFile(file, obj, {spaces: 2}, function (err) {
+  jsonfile.writeFile(file, settingsObj, {spaces: 2}, function (err) {
+    console.error(err);
+  });
+  jsonfile.writeFile('./settings/defaults.json', defaultObj, {spaces: 2}, function (err) {
     console.error(err);
   });
   return true;
