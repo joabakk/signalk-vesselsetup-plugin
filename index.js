@@ -65,6 +65,11 @@ module.exports = function(app) {
         title: "Save as: (vesselname or test or onboard etc). After 'submit', the node server must be restarted to implement changes",
         default: "settings/[filename here].json"
       },
+       saveDefaultAs: {
+        type: "string",
+        title: "Default.json location: After 'submit', the node server must be restarted to implement changes",
+        default: "settings/defaults.json"
+      },
       "name"  : {
         title: "Vessel name",
         type: "string",
@@ -243,6 +248,7 @@ plugin.uiSchema = {
 plugin.start = function(options) {
   var jsonfile = require('jsonfile');
   var file = options.saveAs;
+  var defaultFile = options.saveDefaultAs;
   var defaultObj = {
     "vessel": {
       "name"  : options.name,
@@ -519,7 +525,7 @@ plugin.start = function(options) {
   jsonfile.writeFile(file, settingsObj, {spaces: 2}, function (err) {
     console.error(err);
   });
-  jsonfile.writeFile('./settings/defaults.json', defaultObj, {spaces: 2}, function (err) {
+  jsonfile.writeFile(defaultFile, defaultObj, {spaces: 2}, function (err) {
     console.error(err);
   });
   return true;
