@@ -10,7 +10,7 @@
   },
   "description": "A plugin to set vessel info and static values",
   "devDependencies": {
-    "@signalk/signalk-schema": "0.0.1-12",
+    "@signalk/signalk-schema": "1.0.2",
     "chai": "^3.4.1",
     "chai-things": "^0.2.0",
     "debug": "^2.2.0",
